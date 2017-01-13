@@ -1,0 +1,57 @@
+﻿@*@model IEnumerable<SWFC.WallServiceReference.WallData>*@
+@model PagedList.IPagedList<SWFC.WallServiceReference.WallData>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Wall";
+}
+
+<div style="margin-top:75px;">
+
+    <div class="row">
+        <div class="col-sm-offset-4 col-sm-5 col-md-4 col-md-offset-4">
+            <h2>Wall</h2>
+
+            <form action="~/Wall/Index" method="post">
+                <input type="hidden" name="State" value="cm" />
+                <div class="form-group"><textarea rows="4" cols="5" class="form-control" name="MessageContent" placeholder="Skriv..." required maxlength="500"></textarea></div>
+                <div class="form-group"><input class="btn btn-success" type="submit" value="Posta" /></div>
+            </form>
+        </div>
+    </div>
+
+    @if (Model != null)
+    {
+        foreach (var message in Model)
+        {
+            <div class="row">
+                <div class="thumbnail col-sm-5 col-sm-offset-4 col-md-4 col-md-offset-4" style="margin-top:20px; margin-bottom:20px;">
+                    <img style="max-height:150px;" class="img-responsive" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/694px-Star_Wars_Logo.svg.png" alt="Saknas Bild">
+                    <div class="caption">
+                        <br />
+                        <p>@message.MessageContent</p>
+                        <hr />
+                        <div class="clearfix">
+
+                            @if (message.Username == User.Identity.Name)
+                            {
+                                <form action="~/Wall/Index" method="post">
+                                    <input type="hidden" name="State" value="dm" />
+                                    <input type="hidden" name="MessageId" value="@message.MessageId" />
+                                    <input type="submit" value="Ta Bort Post" class="btn btn-danger pull-left" />
+                                </form>
+                            }
+                            <div class="pull-right"><strong>@message.Username</strong></div><br />
+                            <div class="pull-right">@message.MessagePosted</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div style="margin-bottom:20px;">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = Model.PageSize }))
+            Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Messages
+        </div>
+    }
+
+</div>

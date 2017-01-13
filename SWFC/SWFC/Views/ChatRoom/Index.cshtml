@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "Chat";
+}
+
+<link href="~/Content/chatty.css" rel="stylesheet" />
+
+@section scripts{
+    @Scripts.Render("~/Scripts/jquery-ui-1.12.1.min.js")
+    @Scripts.Render("~/Scripts/jquery.signalR-2.1.2.min.js")
+    @Scripts.Render("/signalr/hubs")
+
+    <script src="~/MyScripts/chat.js"></script>
+    
+}
+
+<div style="margin-top:75px">
+    <h2>Chat</h2>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+            <div class="messagelog form-group">
+                <textarea spellcheck="true" id="message" class="messagebox form-control" required maxlength="150"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row clearfix">
+        <div class="col-xs-6 col-sm-offset-3 col-sm-2 col-md-offset-4 col-md-2">
+            @*Plockar ut alla tecken före @ i mejladressen*@
+            @{
+                string username = User.Identity.Name;
+                string chatnick = "";
+                int index = username.IndexOf('@');
+                if (index > 0)
+                {
+                    chatnick = username.Substring(0, index);
+                }
+
+            }
+            <input id="nick" type="hidden" class="textBox" value="@chatnick" />
+            @*<input id="nick" type="hidden" class="textBox" value="@User.Identity.Name" />*@
+            <div class="form-group">
+                <input class="form-control btn btn-success" type="button" id="btnsend" value="Skicka" />
+                @*<input class="form-control btn btn-info" type="button" id="btnget" value="Hämta" />*@
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2">
+            <div class="form-group">
+                <select class="form-control" id="users">
+                    <option value="SendToUser">Till Alla</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 col-sm-offset-1 col-sm-5 col-md-offset-2 col-md-5">
+            <div id="errorlog"></div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row clearfix">
+        <div class="col-xs-6 col-sm-offset-1 col-sm-5 col-md-offset-2 col-md-5">
+            <div class="thumbnail" style="margin-bottom:20px;">
+                <div class="clearfix caption">
+                    <div style="word-wrap:break-word;" id="chatlog"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-5 col-md-3">
+            <div class="thumbnail" style="margin-bottom:20px;">
+                <div class="clearfix caption">
+                    <input type="hidden" id="nickname" />
+
+                    <h5 class="text-primary">Användare Online</h5><hr />
+                    <div style="word-wrap:break-word;" id="onlineusers">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

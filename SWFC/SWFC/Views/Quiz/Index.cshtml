@@ -1,0 +1,41 @@
+﻿@model List<string>
+
+@{
+    ViewBag.Title = "Quiz";
+}
+
+<div style="margin-top:75px;">
+    <h2>Quiz</h2>
+
+    @if (Model != null)
+    {
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6">
+                <br />
+                <form action="/Quiz/HighScore">
+                    <input class="form-control btn btn-info" type="submit" value="HighScore" />
+                </form>
+                <br />
+                <br />
+                <form action="~/Quiz/Index" method="post">
+                    <ul class="list-group">
+                        @foreach (var item in Model)
+                {
+                            <li class="list-group-item">@item</li>
+                            <li>
+                                <div class="form-group">
+                                    <input type="hidden" name="Question" value="@item" />
+                                    <input class="form-control" type="text" name="Answer" placeholder="Svar..." />
+                                </div>
+                            </li>
+                            <br />
+                        }
+                    </ul>
+                    <div class="form-group"><input class="btn btn-success form-control" type="submit" value="Svara" /></div>
+                </form>
+            </div>
+        </div>
+    }
+    <br />
+    <br />
+</div>

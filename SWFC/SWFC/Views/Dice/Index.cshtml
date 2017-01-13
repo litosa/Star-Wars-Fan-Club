@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Roll Dice";
+}
+
+<div style="margin-top:75px;">
+    <h2>Roll The Dice</h2>
+    <div style="margin-top:100px;" class="row">
+        <div class="col-xs-12 col-sm-offset-4 col-sm-4">
+            <form action="~/Dice/Index">
+                <input class="form-control hidden" name="state" value="getdice" />
+                <input class="form-control btn btn-warning" type="submit" value="Kasta Tärning!" />
+            </form>
+            <br />
+            <br />
+            <br />
+            <br />
+            @if (Model != null)
+            {
+                <h1>@Model</h1>
+            }
+        </div>
+    </div>
+</div>

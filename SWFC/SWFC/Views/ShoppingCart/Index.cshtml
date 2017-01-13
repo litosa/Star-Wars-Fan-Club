@@ -1,0 +1,53 @@
+﻿@model IEnumerable<SWFC.ProductServiceReference.Product>
+@{
+    ViewBag.Title = "Varukorg";
+    double TotalPrice = (double)Session["TotalPrice"];
+    List<SWFC.ProductServiceReference.Product> productlist = (List<SWFC.ProductServiceReference.Product>)Session["shoppinglist"];
+}
+
+<div style="margin-top:75px;">
+    @if (Model == null || productlist.Count == 0)
+    {
+        <a style="margin:250px 0px 250px 0px;" class="btn btn-lg btn-success" href="/Store/Index" role="button">Gå Till Butik</a>
+    }
+
+    @if (Model != null)
+    {
+        if (TotalPrice > 0)
+        {
+            <div class="row">
+                <div style="padding-left:100px;" class="col-sm-offset-2 col-sm-6 col-xs-9">
+                    <h2>Varukorg</h2>
+                    <div class="list-group-item clearfix">
+                        <h4 style="background: rgba(255, 255, 255, 0.75); color:#7f7f7f;"
+                            class="pull-left">
+                            TotalPris: $ @TotalPrice
+                        </h4>
+                        <a href="@Url.Action("Checkout", new { totalPrice = TotalPrice })" class="btn btn-success pull-right">Beställ</a>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div style="padding-left:60px;" class="col-sm-offset-2 col-sm-6 col-xs-9">
+                <div class="list-group">
+                    <ul class="list-group-item-heading">
+                        @foreach (var item in Model)
+                        {
+                            <div>
+                                <a style="background: rgba(217,83,79, 50);" class="list-group-item" href="@Url.Action("DeleteItemFromShoppingcart", new { id = item.ProductId })">Ta Bort Från Varukorg</a>
+                                <a style="background: rgba(255, 255, 255, 0.75);" class="list-group-item clearfix">
+                                    @item.Title | $ @item.Price
+                                </a>
+                            </div>
+                            <br />
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+
+
+</div>

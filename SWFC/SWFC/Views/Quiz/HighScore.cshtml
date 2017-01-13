@@ -1,0 +1,41 @@
+﻿@*@model List<SWFC.QuizServiceReference.QuizHighscore>*@
+@model PagedList.IPagedList<SWFC.QuizServiceReference.QuizHighscore>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "HighScore";
+}
+
+<div style="margin-top:75px;">
+    @if (Model != null)
+    {
+        <div class="row">
+            <div class="col-xs-10 col-sm-offset-4 col-sm-6 col-md-4 col-lg-3" style="margin-top:75px; margin-bottom:20px;">
+                <div class="thumbnail">
+                    <h2 style="color:#7f7f7f">HighScore</h2>
+                    <div class="clearfix caption">
+                        <table class="table table-hover" style="display:block">
+                            <tr>
+                                <th style="color:#7f7f7f">Namn</th>
+                                <th></th>
+                                <th style="color:#7f7f7f">Poäng</th>
+                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td style="color:#7f7f7f">@item.name</td>
+                                    <td></td>
+                                    <td style="color:#7f7f7f">@item.score</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div style="margin-bottom:20px;">
+                    @Html.PagedListPager(Model, page => Url.Action("HighScore", new { page, pageSize = Model.PageSize }))
+                    Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Scores
+                </div>
+            </div>
+        </div>
+    }
+</div>

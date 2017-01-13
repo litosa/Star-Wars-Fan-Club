@@ -1,0 +1,48 @@
+﻿@model IEnumerable<SWFC.Models.OrderViewModel>
+@{
+    ViewBag.Title = "Ordrar";
+    int counter = 0;
+}
+
+<div style="margin-top:75px;">
+    <h2>Mina Ordrar</h2>
+
+    @if (Model != null)
+    {
+        <div class="row">
+            @foreach (var order in Model)
+            {
+                counter++;
+                if (order.Username == User.Identity.Name)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4" style="margin-top:15px; margin-bottom:15px;">
+                        <div class="thumbnail">
+                            <div class="clearfix caption">
+                                <div style="color:#7f7f7f"><h4>TotalPris: $ @order.TotalPrice</h4></div>
+                                <div style="color:#7f7f7f"><h6>Beställd: @order.CreatedAt</h6></div>
+                                <table class="table table-hover text-center" style="display:block">
+                                    <tr>
+                                        <th style="color:#7f7f7f">Titel</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th style="color:#7f7f7f">Pris</th>
+                                    </tr>
+                                    @foreach (var product in order.OrderProductvm.ToList())
+                                    {
+                                        <tr>
+                                            <td style="color:#7f7f7f">@product.ProductTitle</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td style="color:#7f7f7f">$ @product.ProductPrice</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    }
+
+</div>

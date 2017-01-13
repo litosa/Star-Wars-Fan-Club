@@ -1,0 +1,44 @@
+﻿@model IEnumerable<SWFC.ProductServiceReference.Product>
+@{
+    ViewBag.Title = "Butik";
+    int counter = 0;
+}
+
+
+<div style="margin-top:75px;">
+    @if (Model != null)
+    {
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                counter++;
+
+                <div class="col-sm-6 col-md-4" style="margin:20px 0px 20px 0px;">
+                    <div class="thumbnail">
+                        <img style="max-height:150px;" class="img-responsive" src="@product.ImageUrl" alt="Saknas Bild">
+                        <div class="caption">
+                            <h3>@product.Title</h3>
+                            <p style="color:#7f7f7f">
+                                @product.Description
+                            </p>
+                            <div class="clearfix">
+                                <div class="price pull-left">$@product.Price</div>
+                                <a href="@Url.Action("ShoppingCart", new { id = product.ProductId })" class="btn btn-success pull-right">Köp</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                if (counter == 2)
+                {
+                    <div class="clearfix visible-sm"></div>
+                }
+                else if (counter == 3)
+                {
+                    <div class="clearfix visible-md visible-lg"></div>
+                }
+            }
+        </div>
+    }
+
+</div>
